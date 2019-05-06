@@ -1,0 +1,85 @@
+<form method="POST">
+    <div id="search-on">
+        <div class="input-field">
+            <input name="search-barre" class="autocomplete search" type="text" id="search-barre" autocomplete="off" placeholder="Rechercher un mot" />
+            <div id="test"></div>
+            <a id="material-icons-dropdown-flag" class='dropdown-trigger btn-flat btn-flat-hover tooltipped' href='#' data-target='dropdown-flag' data-position="bottom" data-tooltip="Changer de langue">
+                <i class="material-icons">arrow_drop_down</i>
+            </a>
+            <ul id='dropdown-flag' class='dropdown-content'>
+                <li>
+                    <img id="imgFlagEn" class="image-flag-drowpdown clickFlag" src="{{ asset('pictures/flags/FlagEN_SearchBar.jpg') }} ">
+                </li>
+                <li class="divider" tabindex="-1"></li>
+                <li>
+                    <img id="imgFlagFr" class="image-flag-drowpdown clickFlag" src="{{ asset('pictures/flags/FlagFR_SearchBar.jpg') }}">
+                </li>
+            </ul>
+            <button id="btnSearch" class="btn-flat btn-flat-hover tooltipped" data-position="bottom" data-tooltip="Rechercher">
+                <i class="material-icons orange-text">search</i>
+            </button>
+
+            <div id="close-barre" class="btn-floating background-color-orange-lacces">
+                <i class="material-icons white-text">close</i>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="background-search"></div>
+
+<div id="radiobtn">
+    <div>
+        <label>
+            <input type="radio" id="btnFr" name="langue" checked="true"/>
+            <span>fr</span>
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="radio" name="langue" id="btnEn"/>
+            <span>en</span>
+        </label>
+    </div>
+</div>
+<script src="{{ asset('js/js_for_views/searchBarre.js') }}"></script>
+<script>
+
+$('document').ready(function () {
+    actualiserTableau("fr");
+
+    $('.clickFlag').click(function() {
+        setTimeout(function () {
+            if ($("#btnFr").is(':checked')) {
+                actualiserTableau("fr");
+            } else if ($("#btnEn").is(':checked')) {
+                actualiserTableau("en");
+            }
+        }, 20)
+
+    });
+
+    function actualiserTableau(langue) {
+        $.ajax({
+            url: "{{ path('auto_complete') }}",
+            type: 'POST',
+            cache: false,
+            data: {'l':langue},
+            success: function (response) {
+                var mots = new Object();
+                if(response){
+                    for(i = 0; i<response.length; i++){
+                        mots[response[i].word] = null;
+                    }
+                    $('#search-barre').autocomplete({
+                        data: mots,
+                        limit: 10
+                    });
+                }
+            },
+            error: function (err) {
+            }
+        });
+    };
+});
+</script>

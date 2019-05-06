@@ -1,0 +1,194 @@
+{% extends '@Lacces/Administration/administration.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/css_for_views/addExercice.css') }}">
+{% endblock %}
+
+{% block title %}Ajouter un exercice{% endblock %}
+
+{% block body %}
+<div class="container-body">
+    <main>
+        <div class="container">
+            <div class="container-main-flex">
+                <div class="row center">
+                    <a class="btn background-color-orange-lacces btn-hover white-text" href="{{ path('lacces_ex__en_add') }}">Passer en anglais</a>
+                    <p class="flow-text">Ajout d'un exercice pour un mot français</p>
+                </div>
+                    <div class="row center">
+                        <a href="#modalHelp" class="btn-flat btn-flat-hover waves-effect modal-trigger">
+                            Ajout d'un lien vidéo
+                            <i class="material-icons right">help</i>
+                        </a>
+                    </div>
+                <div class="row">
+                    <div class="col s12 m6">
+                        <label>Mots</label>
+                        <select id="words" required="required">
+                            <option value="0" selected="selected">Sélectionnez un mot</option>
+                            {% for w in words %}
+                                <option value="{{ w.id }}">{{ w.word }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col s12 m6">
+                        <label for="typeEx">Types d'exercices</label>
+                        <select name="typeEx" id="typeEx" required="required">
+                            <option value="0" selected="selected">Sélectionnez le type d'exercice</option>
+                            <option value="1">Signification vidéo</option>
+                            <option value="2">QCM</option>
+                            <option value="3">QCM video</option>
+                            <option value="4">Reformulation d'une phrase</option>
+                        </select>
+                    </div>
+                    <div class="col s12">
+                        <div id="ex">
+                        </div>
+                    </div>
+                </div>
+                <div class="row center">
+                    <button id="valid" type="button" class="btn btn-hover background-color-orange-lacces" onclick="submit()">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalHelp" class="modal">
+        <div class="modal-content">
+            <div class="video-container">
+                <video class="responsive-video" width="1100" height="619" controls>
+                    <source src="{{ asset('videos/Ajout_lien_video.mp4') }}" type="video/mp4">
+                    Votre navigateur ne supporte pas la balise video
+                </video>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect btn-flat btn-flat-hover">
+                Fermer
+                <i class="material-icons right">close</i>
+            </a>
+        </div>
+    </div>
+
+    <div id="modalError" class="modal">
+        <div class="modal-content">
+            <p class="flow-text"><i class="material-icons left"></i> L'exercice n'a pas été ajouté.</p>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect btn-flat btn-flat-hover">
+                Fermer
+            </a>
+        </div>
+    </div>
+
+    <div id="modalSucces" class="modal">
+        <div class="modal-content">
+            <p class="flow-text">L'exercice à bien été ajouté.</p>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect btn-flat btn-flat-hover">
+                Fermer
+                <i class="material-icons right">beenhere</i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/js_for_views/addExercice.js') }}"></script>
+    <script>
+        /*$('#modalSucces').modal();
+        $('#modalError').modal();*/
+        $('.modal').modal();
+
+        function submit(){
+            var ex = $('#typeEx').val();
+            var solution = $('#solution').val();;
+            var wordId = $('#words').val();
+
+            if(ex != "" && solution != "" && wordId != ""){
+                switch (ex) {
+                    case '1':
+                        var videoLink = $('#videoLink').val();
+                        if(videoLink != ""){
+                            $.ajax({
+                                cache:false,
+                                type: 'POST',
+                                dataType: 'json',
+                                url: "{{ path('validAddExercice') }}",
+                                data:{'word':wordId, 'ex': ex, 'langue':"fr", 'solution':solution, 'videoLink':videoLink},
+                                success:function () {
+                                    succes();
+                                },
+                                error:function () {
+                                    $('#modalError').modal('open');
+                                }
+                            })
+                        }
+                        break;
+                    case '2':
+                        var enonce = $('#enonce').val();
+                        var otherRep = OtherRepString();
+                        if(enonce != "" && otherRep != ""){
+                            $.ajax({
+                                cache:false,
+                                type: 'POST',
+                                dataType: 'json',
+                                url: "{{ path('validAddExercice') }}",
+                                data:{'word':wordId, 'ex': ex, 'langue':"fr", 'enonce':enonce, 'solution':solution, 'otherRep':otherRep},
+                                success:function () {
+                                    succes();
+                                },
+                                error:function () {
+                                    $('#modalError').modal('open');
+                                }
+                            })
+                        }
+                        break;
+                    case '3':
+                        var videoLink = $('#videoLink').val();
+                        var otherRep = OtherRepString();
+                        if(videoLink != "" && otherRep != ""){
+                            $.ajax({
+                                cache:false,
+                                type: 'POST',
+                                dataType: 'json',
+                                url: "{{ path('validAddExercice') }}",
+                                data:{'word':wordId, 'ex': ex, 'langue':"fr", 'solution':solution, 'videoLink':videoLink, 'otherRep':otherRep},
+                                success:function () {
+                                    succes();
+                                },
+                                error:function () {
+                                    $('#modalError').modal('open');
+                                }
+                            })
+                        }
+                        break;
+                    case '4':
+                        var enonce = $('#enonce').val();
+                        if(enonce != ""){
+                            $.ajax({
+                                cache:false,
+                                type: 'POST',
+                                dataType: 'json',
+                                url: "{{ path('validAddExercice') }}",
+                                data:{'word':wordId, 'ex': ex, 'langue':"fr", 'enonce':enonce, 'solution':solution},
+                                success:function () {
+                                    succes();
+                                },
+                                error:function () {
+                                    $('#modalError').modal('open');
+                                }
+                            })
+                        }
+                        break;
+                    default:
+                        return;
+                        break;
+                }
+            }
+        }
+    </script>
+{% endblock %}
+

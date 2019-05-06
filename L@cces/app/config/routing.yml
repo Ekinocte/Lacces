@@ -1,0 +1,4 @@
+lacces:
+    resource: "@LaccesBundle/Resources/config/routing.yml"
+    prefix:   /
+

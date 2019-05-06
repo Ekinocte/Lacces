@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Face à Face français LSF anglais ASL - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+        <link rel="stylesheet" href="{{ asset('css/jquery_materialize/materialize.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/css_for_views/base/base.css') }}"/>
+        {% block stylesheets %}
+        {% endblock %}
+        <script src="{{ asset('js/jquery_materialize/jquery.js') }}"></script>
+        <script src="{{ asset('js/jquery_materialize/materialize.min.js') }}"></script>
+        <script src="{{ asset('js/js_for_views/base.js') }}"></script>
+        <meta name="description" content="L’Application « FACE à FACE Français LSF Anglais ASL » est un outil d’apprentissage linguistique  permettant d’entrer par
+        l’une des quatre langues dans les trois autres, en face à face, pour s’initier ou se perfectionner à leur utilisation courante.
+        Les clips vidéos LSF et ASL ont été réalisés par des signeurs locuteurs natifs, en France et aux Etats Unis, garants de l’authenticité de leur langue première.
+        Des exercices  écrits (sous forme de Quizz) les accompagnent pour permettre aux usagers une appropriation  lexicale à partir d’énoncés de contextualisation.
+        Pour les premiers ( A, B), la solution est donnée, pour un travail en autonomie ; pour les autres ( C, D), il faut se rendre sur la plateforme numérique
+        du Consortium L@cces-lsf-pour-tous qui propose des formations en ligne en e-learning (à distance) et désormais, en connexion avec cette Application,
+        une méthode d’apprentissage en immersion. Cette Application s’inscrit dans la lutte contre l’illetrisme et pour  l’apprentissage de l’anglais."/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <meta name="theme-color" content="#f4a733"/>
+        <link rel="icon" type="image/x-icon" href="{{ asset('logo_lacces_ico.ico') }}" />
+    </head>
+    <body>
+        <div class="navbar-fixed">
+            <nav class="nav-wrapper white">
+                <ul class="left">
+                    <li>
+                        <a class="sidenav-trigger show-on-large" data-target="slide-out">
+                            <i class="material-icons grey-text text-darken-1">menu</i>
+                        </a>
+                    </li>
+                </ul>
+                <div id="container_logo_lacces">
+                    <a href="{{ asset('') }}" class="brand-logo center">
+                        <img id="logo_lacces" alt="Logo L@cces" src={{ asset('pictures/logo/logo_lacces.png') }}/>
+                    </a>
+                </div>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <ul class="right">
+                        <li>
+                            <a class="dropdown-trigger material-icons-dropdown" href="" data-target="dropdown-menu">
+                                <i class="material-icons grey-text text-darken-1">more_vert</i>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </nav>
+            {% if is_granted("ROLE_ADMIN") %}
+                <ul id="dropdown-menu" class="dropdown-content">
+                    <li>
+                        <a class="btn waves-effect background-color-orange-lacces white-text center btn-log" href="{{ path('administration') }}">
+                            Administration
+                        </a>
+                    </li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li>
+                        <a class="btn waves-effect background-color-violet-lacces white-text center btn-log" href="{{ path('logout') }}">
+                            Déconnexion
+                        </a>
+                    </li>
+                </ul>
+            {% endif %}
+            {% block navbarre %}
+            {% endblock %}
+        </div>
+        <ul class="sidenav white" id="slide-out">
+            <li class="sidenav-close">
+                <a class="sidenav-close waves-effect">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </li>
+            {% if app.request.attributes.get('_route') == 'lacces_homepage' %}
+            <li class="bold active active-item-menu background-color-orange-lacces">
+            {% else %}
+            <li class="bold">
+            {% endif %}
+                <a class="waves-effect" href="{{ asset('') }}">Accueil</a>
+            </li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    {% if app.request.attributes.get('_route') == 'lacces_signaire_fr' or app.request.attributes.get('_route') == 'lacces_signaire_en' %}
+                    <li class="bold active" id="sng">
+                    {% else %}
+                    <li class="bold" id="sng">
+                    {% endif %}
+                        <a class="collapsible-header waves-effect" id="collapsible-header-click">Signaires<i class="material-icons right" id="material-icons_arrow_drop_down">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                {% if app.request.attributes.get('_route') == 'lacces_signaire_fr' %}
+                                <li class="active active-item-menu background-color-orange-lacces" id="liImg">
+                                {% else %}
+                                <li class="white" id="liImg">
+                                {% endif %}
+                                    <a class="waves-effect" href="{{ asset('signaire/Fr') }}"><span class="bold">L</span>angue des <span class="bold">S</span>ignes <span class="bold">F</span>rançaise</a>
+                                </li>
+                                {% if app.request.attributes.get('_route') == 'lacces_signaire_en' %}
+                                <li class="active active-item-menu background-color-orange-lacces">
+                                {% else %}
+                                <li class="white">
+                                {% endif %}
+                                    <a class="waves-effect" href="{{ asset('signaire/En') }}"><span class="bold">A</span>merican <span class="bold">S</span>ign <span class="bold">L</span>anguage</a>
+                                </li>
+                                <li>
+                                    <div class="divider"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            {% if app.request.attributes.get('_route') == 'lacces_exercices' %}
+            <li class="bold active active-item-menu background-color-orange-lacces">
+            {% else %}
+            <li class="bold white">
+             {% endif %}
+                <a class="waves-effect exercices" href="{{ asset('exercices') }}">Exercices</a>
+            </li>
+            {% if app.request.attributes.get('_route') != 'lacces_homepage' %}
+                {% if app.request.attributes.get('_route') == 'lacces_contact' %}
+                <li class="bold active active-item-menu background-color-orange-lacces">
+                {% else %}
+                <li class="bold">
+                {% endif %}
+                    <a class="waves-effect" href="{{ asset('/contact') }}">Contact</a>
+                </li>
+                {% if app.request.attributes.get('_route') == 'lacces_mentions_legales' %}
+                <li class="bold active active-item-menu background-color-orange-lacces">
+                {% else %}
+                <li class="bold">
+                {% endif %}
+                     <a class="waves-effect" href="{{ asset('/mentions_legales') }}">Mentions légales</a>
+                </li>
+                {% if app.request.attributes.get('_route') == 'lacces_faq' %}
+                <li class="bold active active-item-menu background-color-orange-lacces">
+                {% else %}
+                <li class="bold">
+                {% endif %}
+                    <a class="waves-effect" href="{{ asset('/faq') }}">FAQ</a>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="container-row-icons-menu">
+                            <a href="">
+                                <div class="container-icons">
+                                    <img alt="Lien vers la page facebook" src="{{ asset('pictures/icons/facebook-f-white.svg') }}"/>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div class="container-icons">
+                                    <img alt="Partager le l'application" src="{{ asset('pictures/icons/share-alt-white.svg') }}"/>
+                                </div>
+                            </a>
+                            <a href="http://consortium-lacces-lsf-pour-tous.fr/">
+                                <div class="container-icons">
+                                    <img alt="Lien vers le site du consortium L@cces" src="{{ asset('pictures/icons/globe-white.svg') }}"/>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+        <noscript class="red white-text center flow-text">
+            <div class="container">
+                <div class="row">
+                    <p>
+                        JavaScript n'est pas activé dans votre navigateur. L'application nécéssite son activation pour une utilisation optimale. Activez-le, puis rechargez la page.
+                    </p>
+                </div>
+            </div>
+        </noscript>
+        {% block body %}
+        {% endblock %}
+    </body>
+    {% block javascripts %}
+    {% endblock %}
+
+</html>
+

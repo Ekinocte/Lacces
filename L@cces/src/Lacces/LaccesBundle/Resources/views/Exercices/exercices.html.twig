@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/css_for_views/exercice.css') }}">
+{% endblock %}
+
+{% block title %}Exercices{% endblock %}
+
+{% block navbarre %}
+
+
+{% endblock %}
+
+{% block body %}
+    <div class="nav-content">
+        <div class = "row center">
+            <ul class = "tabs z-depth-1 tabs-fixed-width">
+                <li id="exerciceLangage" class="tooltipped" data-position="bottom" data-tooltip="Changez de langue">
+                    <a id="material-icons-dropdown-flag" class='dropdown-trigger btn-flat' href='#' data-target='dropdown-flag'>
+                        <i class="material-icons">language</i>
+                        <i class="material-icons">arrow_drop_down</i>
+                    </a>
+                    <ul id="dropdown-flag" class="dropdown-content dropdown-flag-exercice">
+                        <li>
+                            <a href="{{ path('lacces_exercices', {'langue': "en", 'wordId': wordEnId}) }}">
+                                <img id="imgFlagEn" class="image-flag-drowpdown" src="{{ asset('pictures/flags/FlagEN_SearchBar.jpg') }} "/>
+                            </a>
+                        </li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li>
+                            <a href="{{ path('lacces_exercices', {'langue': "fr", 'wordId': wordFrId}) }}">
+                                <img id="imgFlagFr" class="image-flag-drowpdown" src="{{ asset('pictures/flags/FlagFR_SearchBar.jpg') }}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class = "tab tooltipped" data-position="bottom" data-tooltip="Regardez la vidéo ASL et trouvez la phrase signée en correspondante">
+                    <a id="exerciceA1Link" href="#exerciceA1">Exercice A1</a>
+                </li>
+                <li class = "tab tooltipped" data-position="bottom" data-tooltip="Lisez chaque phrase en français et en anglais. Etudiez les correspondances et / ou les différences.">
+                    <a id="exerciceA2Link" href="#exerciceA2">Exercice A2</a>
+                </li>
+                <li class = "tab tooltipped" data-position="bottom" data-tooltip="QCM. Cocher la bonne réponse">
+                    <a id="exerciceBLink" href = "#exerciceB">Exercice B</a>
+                </li>
+                <li class = "tab tooltipped" data-position="bottom" data-tooltip="Quelle phrase  est la plus proche de la phrase signée">
+                    <a id="exerciceCLink" href = "#exerciceC">Exercice C</a>
+                </li>
+                <li class = "tab tooltipped disabled" data-position="bottom" data-tooltip="Recréez la phrase en mettant les mots dans l’ordre  pour recréer une phrase">
+                    <a id="exerciceDLink" href = "#exerciceD">Exercice D</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-body">
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="preloader-background center ">
+                        <div class="preloader-wrapper medium active">
+                            <div class="spinner-layer spinner-yellow-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="exerciceA1"></div>
+                    <div id="exerciceA2"></div>
+                    <div id="exerciceB"></div>
+                    <div id="exerciceC"></div>
+                    <div id="exerciceD"></div>
+                </div>
+            </div>
+            <div class="fixed-action-btn">
+                <a id="refresh" class="btn-floating btn-large waves-effect background-color-orange-lacces">
+                    <i class="large material-icons white-text">refresh</i>
+                </a>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var langue = "{{ langue }}";
+        $(document).ready(function(){
+            if(langue == "en") {
+                $("#exerciceA1").load(ajaxExercice("{{ path('lacces_exerciceA1', {'langue': "en", 'wordId': wordId}) }}", "#exerciceA1"));
+            } else {
+                $("#exerciceA1").load(ajaxExercice("{{ path('lacces_exerciceA1', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceA1"));
+            }
+        });
+
+        if(langue == "en") {
+            $("#imgFlagEn").parent().css("background-color", "#f4a733");
+            $("#imgFlagFr").parent().css("background-color", "white");
+            console.log("yoho");
+        } else {
+            $("#imgFlagFr").parent().css("background-color", "#f4a733");
+            $("#imgFlagEn").parent().css("background-color", "white");
+            console.log("nfslkjgkds");
+        }
+
+        $(".tabs").tabs();
+
+        document.addEventListener("DOMContentLoaded", function(){
+            $(".preloader-background").hide();
+        });
+
+        $("#exerciceA1Link").click(function () {
+            if(langue == "en")
+                $("#exerciceA1").load(ajaxExercice("{{ path('lacces_exerciceA1', {'langue': "en", 'wordId': wordId}) }}", "#exerciceA1"));
+            else
+                $("#exerciceA1").load(ajaxExercice("{{ path('lacces_exerciceA1', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceA1"));
+        });
+
+        $("#exerciceA2Link").click(function () {
+            if(langue == "en")
+                $("#exerciceA2").load(ajaxExercice("{{ path('lacces_exerciceA2', {'langue': "en", 'wordId': wordId}) }}", "#exerciceA2"));
+            else
+                $("#exerciceA2").load(ajaxExercice("{{ path('lacces_exerciceA2', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceA2"));
+        });
+
+        $("#exerciceBLink").click(function () {
+            if(langue == "en")
+                $("#exerciceB").load(ajaxExercice("{{ path('lacces_exerciceB', {'langue': "en", 'wordId': wordId}) }}", "#exerciceB"));
+            else
+                $("#exerciceB").load(ajaxExercice("{{ path('lacces_exerciceB', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceB"));
+        });
+
+        $("#exerciceCLink").click(function () {
+            if(langue == "en")
+                $("#exerciceC").load(ajaxExercice("{{ path('lacces_exerciceC', {'langue': "en", 'wordId': wordId}) }}", "#exerciceC"));
+            else
+                $("#exerciceC").load(ajaxExercice("{{ path('lacces_exerciceC', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceC"));
+        });
+
+        {#
+        $("#exerciceDLink").click(function () {
+            if(langue == "en")
+                $("#exerciceD").load(ajaxExercice("{{ path('lacces_exerciceD', {'langue': "en", 'wordId': wordId}) }}", "#exerciceD"));
+            else
+                $("#exerciceD").load(ajaxExercice("{{ path('lacces_exerciceD', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceD"));
+        });
+        #}
+
+        $("#refresh").click(function () {
+            if(langue == "en") {
+                if($("#exerciceA1Link").hasClass("active")){
+                    $("#exerciceA1").load(ajaxExercice("{{ path('lacces_exerciceA1', {'langue': "en", 'wordId': wordId}) }}", "#exerciceA1"));
+                } else if ($("#exerciceA2Link").hasClass("active")) {
+                    $("#exerciceA2").load(ajaxExercice("{{ path('lacces_exerciceA2', {'langue': "en", 'wordId': wordId}) }}", "#exerciceA2"));
+                } else if ($("#exerciceBLink").hasClass("active")) {
+                    $("#exerciceB").load(ajaxExercice("{{ path('lacces_exerciceB', {'langue': "en", 'wordId': wordId}) }}", "#exerciceB"));
+                } else if ($("#exerciceCLink").hasClass("active")) {
+                    $("#exerciceC").load(ajaxExercice("{{ path('lacces_exerciceC', {'langue': "en", 'wordId': wordId}) }}", "#exerciceC"));
+                } {#else if ($("#exerciceDLink").hasClass("active")) {
+                    $("#exerciceD").load(ajaxExercice("{{ path('lacces_exerciceD', {'langue': "en", 'wordId': wordId}) }}", "#exerciceD"));
+                }#}
+            } else if (langue == "fr") {
+                if($("#exerciceA1Link").hasClass("active")){
+                    $("#exerciceA1").load(ajaxExercice("{{ path('lacces_exerciceA1', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceA1"));
+                } else if ($("#exerciceA2Link").hasClass("active")) {
+                    $("#exerciceA2").load(ajaxExercice("{{ path('lacces_exerciceA2', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceA2"));
+                } else if ($("#exerciceBLink").hasClass("active")) {
+                    $("#exerciceB").load(ajaxExercice("{{ path('lacces_exerciceB', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceB"));
+                } else if ($("#exerciceCLink").hasClass("active")) {
+                    $("#exerciceC").load(ajaxExercice("{{ path('lacces_exerciceC', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceC"));
+                } {#else if ($("#exerciceDLink").hasClass("active")) {
+                    $("#exerciceD").load(ajaxExercice("{{ path('lacces_exerciceD', {'langue': "fr", 'wordId': wordId}) }}", "#exerciceD"));
+                } #}
+            }
+
+        });
+
+        function ajaxExercice (path, blockResponse){
+            $.ajax({
+                cache:false,
+                type: "POST",
+                dataType: "JSON",
+                url: path,
+                data: {'langue':"en"},
+                beforeSend: function(){
+                    $(blockResponse).css("visibility", "hidden");
+                    $(".preloader-background").show();
+                },
+                success: function(response)
+                {
+                    $(blockResponse).html(response);
+                    $(".preloader-background").hide();
+                    $(blockResponse).css("visibility", "visible");
+                },
+            });
+        }
+    </script>
+{% endblock %}

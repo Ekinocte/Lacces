@@ -1,0 +1,43 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    encoders:
+        Lacces\LaccesBundle\Entity\user:
+            algorithm: bcrypt
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        symfony:
+            entity:
+                class: LaccesBundle:user
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            form_login:
+                login_path: lacces_homepage_temp # à changer par : adminLogin /!\
+                check_path: login_check
+                default_target_path: administration
+                always_use_default_target_path: true
+            logout:
+                path: logout
+                target: lacces_homepage
+
+            pattern:    ^/
+            http_basic: ~
+            provider: symfony
+
+    access_control:
+        - { path: ^/administration, roles: ROLE_ADMIN }

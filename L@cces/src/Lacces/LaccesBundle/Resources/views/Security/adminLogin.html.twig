@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block title %}
+    Connexion administration
+{% endblock %}
+
+{% block body %}
+
+    <div class="container-body">
+        <main>
+            <div class="container">
+                <div class="container-main-flex">
+                    {% if error %}
+                        <div>
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                        <form action="{{ path('login_check') }}" method="post">
+                            <div class="row">
+                                <div class="col s12 m6 offset-m3">
+                                    <div class="input-field">
+                                        <label for="username">Identifiant</label>
+                                        <input class="formValue" type="text" id="username" name="_username" value="{{ last_username }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m6 offset-m3">
+                                    <div class="input-field">
+                                        <label  for="password">Mot de passe</label>
+                                        <input class="formValue" type="password" id="password" name="_password"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row center">
+                                <button class="btn waves-effect background-color-orange-lacces" type="submit">Se connecter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('css/css_for_views/signaire.css') }}">
+
+{% endblock %}
+
+{% block title %}American Sign Language{% endblock %}
+
+{% block body %}
+    <div class="container-body">
+        <main>
+            <div class="container">
+                <ul class="collapsible collapsible-accordion">
+                    {% for letter in 'a'..'z' %}
+                        <li class="bold">
+                            <a class="collapsible-header waves-effect collapsible-ASL">
+                                <div class="lettreMaj">
+                                    {{ letter|upper }}
+                                    <i class="material-icons material-icons_arrow_drop_down">arrow_drop_down</i>
+                                    <img alt="Logo de la lettre" class="alphabet-pictures" src="{{ asset('pictures/alphabet/LSF/'~letter|upper~'.png') }}" />
+                                </div>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    {% for w in wordFr %}
+                                        {% if w.word|first|lower == letter %}
+                                            <li class="white">
+                                                <a class="flow-text black-text" id="word" href="../word/fr/{{ w.word }}">{{ w.word }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </main>
+    </div>
+{% endblock %}

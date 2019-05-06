@@ -1,0 +1,195 @@
+lacces_homepage_temp:
+    path:     /temp
+    defaults:
+        _controller: LaccesBundle:Temp:temp
+
+lacces_homepage:
+    path:     /
+    defaults:
+        _controller: LaccesBundle:Default:index
+
+lacces_signaire_fr:
+    path:     /signaire/Fr
+    defaults:
+        _controller: LaccesBundle:Default:signaireFr
+
+lacces_signaire_en:
+    path:     /signaire/En
+    defaults:
+        _controller: LaccesBundle:Default:signaireEn
+
+lacces_word:
+    path:     /word/{langue}/{word}
+    defaults:
+        _controller: LaccesBundle:Default:word
+    requirements:
+      langue: en|fr
+
+lacces_contact:
+    path:     /contact
+    defaults:
+        _controller: LaccesBundle:Contact:contact
+
+lacces_mentions_legales:
+    path:     /mentions_legales
+    defaults:
+        _controller: LaccesBundle:Default:mentions
+
+lacces_faq:
+    path:     /faq
+    defaults:
+        _controller: LaccesBundle:Default:faq
+
+auto_complete:
+    path:   /search
+    defaults:
+        _controller: LaccesBundle:Default:autoComplete
+
+lacces_editData_edit:
+    path: /administration/editData/edit/{wordId}/{langue}
+    defaults:
+        _controller: LaccesBundle:EditDataWord:edit
+    requirements:
+        wordFrId: /d+
+        wordEnId: /d+
+
+lacces_editData_add:
+    path: /administration/editData/add
+    defaults:
+        _controller: LaccesBundle:EditDataWord:add
+
+lacces_editData_remove:
+    path: /administration/editData/remove
+    defaults:
+        _controller: LaccesBundle:EditDataWord:remove
+
+lacces_wordList:
+    path: /administration/editData/wordList/{langue}
+    defaults:
+        _controller: LaccesBundle:EditDataWord:wordList
+    requirements:
+        langue: fr|en
+
+lacces_addTranslation:
+    path: /administration/editData/addTranslation/{wordId}/{langue}
+    defaults:
+        _controller: LaccesBundle:EditDataWord:addTranslation
+    requirements:
+        langue: fr|en
+
+
+adminLogin:
+    path: /adminLogin
+    defaults:
+        _controller: LaccesBundle:Security:adminLogin
+
+login_check:
+    path: /login_check
+    defaults:
+        _controller: LaccesBundle:Security:loginCheck
+
+logout:
+    path: /logout
+    defaults:
+        _controller: LaccesBundle:Security:logout
+
+administration:
+    path: /administration
+    defaults:
+        _controller: LaccesBundle:Administration:admin
+
+add_admin:
+    path: /administration/addAdmin
+    defaults:
+        _controller: LaccesBundle:Administration:addAdmin
+
+lacces_exercices:
+    path:   /exercices/{langue}/{wordId}
+    defaults:
+        langue: en
+        _controller: LaccesBundle:Exercice:exercices
+        wordId: 0
+    requirements:
+        langue: fr|en
+
+
+lacces_ex__fr_add:
+    path: /administration/exerciceFr/add
+    defaults:
+        _controller: LaccesBundle:EditDataExercice:exerciceAddFr
+
+lacces_ex__en_add:
+    path: /administration/exerciceEn/add
+    defaults:
+        _controller: LaccesBundle:EditDataExercice:exerciceAddEn
+
+lacces_exerciceA1:
+    path: /exercice/{langue}/A1/{wordId}
+    defaults:
+        langue: fr
+        _controller: LaccesBundle:Exercice:exerciceA1
+        wordId: 0
+    requirements:
+        langue: fr|en
+
+
+lacces_exerciceA2:
+    path: /exercice/{langue}/A2/{wordId}
+    defaults:
+        langue: en
+        _controller: LaccesBundle:Exercice:exerciceA2
+        wordId: 0
+    requirements:
+        langue: fr|en
+
+lacces_exerciceB:
+    path: /exercice/{langue}/B/{wordId}
+    defaults:
+        langue: en
+        _controller: LaccesBundle:Exercice:exerciceB
+        wordId: 0
+    requirements:
+        langue: fr|en
+
+lacces_exerciceC:
+    path: /exercice/{langue}/C/{wordId}
+    defaults:
+        langue: en
+        _controller: LaccesBundle:Exercice:exerciceC
+        wordId: 0
+    requirements:
+        langue: fr|en
+
+lacces_exerciceD:
+    path: /exercice/{langue}/D/{wordId}
+    defaults:
+        langue: en
+        _controller: LaccesBundle:Exercice:exerciceD
+        wordId: 0
+    requirements:
+        langue: fr|en
+
+validAddExercice:
+    path: /administration/exercice/add/validExercice
+    defaults:
+        _controller: LaccesBundle:EditDataExercice:validExercice
+
+listExerciceFr:
+    path: /administration/exercice/listExerciceFr
+    defaults:
+        _controller: LaccesBundle:EditDataExercice:listExerciceFr
+
+listExerciceEn:
+    path: /administration/exercice/listExerciceEn
+    defaults:
+        _controller: LaccesBundle:EditDataExercice:listExerciceEn
+
+removeExercice:
+    path: /administration/exercice/remove
+    defaults:
+        _controller: LaccesBundle:EditDataExercice:removeExercice
+
+lacces_helpAdmin:
+    path: /administration/help
+    defaults:
+        _controller: LaccesBundle:Administration:helpAdmin

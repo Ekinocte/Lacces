@@ -1,0 +1,42 @@
+{% extends '@Lacces/Administration/administration.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+{% block title %}Aide{% endblock %}
+{% block body %}
+    <div class="container-body">
+        <main>
+            <div class="container">
+                <div class="container-main-flex">
+                    <section>
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">Ajouter un mot</div>
+                                <div class="collapsible-body center">
+                                    <div class="video-container">
+                                        <video class="responsive-video" width="1100" height="619" controls>
+                                            <source src="{{ asset('videos/ajout_mots.mp4') }}" type="video/mp4">
+                                            Votre navigateur ne supporte pas la balise video
+                                        </video>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Ajouter un exercice</div>
+                                <div class="collapsible-body center">
+                                    <div class="video-container">
+                                        <video class="responsive-video" width="1100" height="619" controls>
+                                            <source src="{{ asset('videos/Ajout_exercices.mp4') }}" type="video/mp4">
+                                            Votre navigateur ne supporte pas la balise video
+                                        </video>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}

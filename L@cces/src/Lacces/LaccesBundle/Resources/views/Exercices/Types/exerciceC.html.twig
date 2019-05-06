@@ -1,0 +1,57 @@
+<div class="col s12 m12 l8 offset-l2">
+    {% if not obj_exerciceC %}
+        <div class="card">
+            <div class="card-content center black-text flow-text">
+                <i class="material-icons black-text">warning</i>
+                <p>{{ messageErreur }}</p>
+            </div>
+        </div>
+    {% else %}
+    <div class="card">
+        <div class="card-content center black-text flow-text">
+            <p>
+                Quelle phrase est la plus proche de la phrase signée
+            </p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-image">
+            <div class="video-container">
+                <iframe title="{{ word }}" width="1100" height="619" src="{{ obj_exerciceC.videoLink }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="card-content">
+            <form id="form-qcm">
+                {% for item in tableauReponses %}
+                    <div class="row">
+                        <label>
+                            <input name="group-qcm" data-qcm-id="{{ item.id }}" class="with-gap" type="radio"/>
+                            <span>{{ item.enonces }}</span>
+                        </label>
+                        <div class="right"></div>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<script>
+    $("input:radio[name=group-qcm]").on("click", function () {
+        check();
+    });
+    function check(){
+        $("input:radio[name=group-qcm]").each(function () {
+            if($(this).is(":checked")){
+                var valueIn = $(this).attr("data-qcm-id");
+                if(valueIn.toString() === "{{ solution }}") {
+                    $(this).parent().next().html("<i id=\"result-done\" class=\"result material-icons small green-text\">done</i>");
+                    $("#form-qcm input").attr("disabled", "disabled");
+                } else {
+                    $(this).parent().next().html("<i id=\"result-clear\" class=\"result material-icons small red-text\">clear</i>");
+                    $(this).attr("disabled", "disabled");
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,34 @@
+::-webkit-scrollbar-thumb
+{
+    background: rgba(105,8,90,0.7);
+}
+
+::-webkit-scrollbar-thumb:window-inactive
+{
+    background: rgba(105,8,90,0.4);
+}
+
+.sidenav .divider
+{
+    background-color: #212121;
+    border-bottom: 1px solid #ffffff;
+}
+
+.sidenav li>a
+{
+    color: #ffffff;
+}
+
+.btn-menu:hover, .btn-menu:focus, .btn-menu:active, nav ul a:hover
+{
+    background-color: #69085a;
+}
+
+.waves-effect input {
+    color: white;
+}
+
+.sidenav .collapsible-header:hover, .sidenav.fixed .collapsible-header:hover, .sidenav li>a:hover
+{
+    background-color: rgba(0, 0, 0, 0.5);
+}

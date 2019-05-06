@@ -1,0 +1,43 @@
+{% extends '@Lacces/Administration/administration.html.twig' %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block title %}Ajouter un mot{% endblock %}
+
+{% block body %}
+    <div class="container-body">
+        {% block message_flash %}
+            {% for msg in app.session.flashBag.get('info') %}
+                <div id="center-message">
+                    <div class="message-flash background-color-orange-lacces">
+                        <p>{{ msg }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endblock %}
+
+        <main>
+            <div class="container">
+                <div class="container-main-flex">
+                    <section>
+                        <div class="row center">
+                            <a class="btn btn-hover background-color-orange-lacces" href="{{ asset('administration/editData/wordList/fr') }}">Liste de mots</a>
+                        </div>
+                        <div class="row center">
+                            <h3>Ajouter un mot</h3>
+                        </div>
+                        {{ include('@Lacces/formAddWord.html.twig') }}
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('js/js_for_views/contact.js') }}"></script>
+{% endblock %}
+

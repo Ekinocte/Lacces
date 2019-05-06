@@ -1,0 +1,29 @@
+.collapsible-body .row
+{
+    margin-bottom: 0;
+}
+
+.collapsible-body
+{
+    padding: 0;
+}
+
+.active
+{
+    color: #ffffff !important;
+}
+
+.active .collapsible-header
+{
+    background-color: #f4a733;
+}
+
+#search-box
+{
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+}
+

@@ -1,0 +1,268 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/css_for_views/word.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/css_for_views/searchBarre.css') }}">
+{% endblock %}
+{% block title %}
+    Mot {{ word.word|lower }}
+{% endblock %}
+{% block body %}
+    <div class="container-body">
+        <main>
+            <div class="container">
+                <div class="container-main-flex">
+                    <div id="search-box" class="">
+                        <p>
+                            {% include('@Lacces/SearchBarre/searchBarre.html.twig') %}
+                        </p>
+                    </div>
+                    <section>
+                        <div class="row">
+                            <div class="card center">
+                                <div class="card-content">
+                                    <p class="flow-text">
+                                        <strong>{{ word.word|lower }}</strong>
+                                    </p>
+                                    <p class="flow-text">
+                                        {% if langue == "fr" %}
+                                            {% for w in word.wordEns %}
+                                                {{ w.word|lower }}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for w in word.wordFrs %}
+                                                {{ w.word|lower }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="container-video">
+                        <ul class="collapsible popout">
+                            <li id="word" class="active">
+                                <div class="collapsible-header flow-text">
+                                    Mots
+                                </div>
+                                <div class="collapsible-body">
+                                    <div class="row">
+                                        <article id="article-card-1" class="col s12 m6 x6">
+                                            <div class="card center">
+                                                <div class="card-image">
+                                                    <div class="video-container">
+                                                        <iframe id="video-word-1" width="1100" height="619" src="{{ word.videoLink }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article id="article-card-2" class="col s12 m6 x6">
+                                            <div class="card center">
+                                                <div class="card-image">
+                                                    <div class="video-container">
+                                                        <iframe id="video-word-2" width="1100" height="619" src="
+                                                        {% if langue == "fr" %}
+                                                            {% for w in word.wordEns %}
+                                                                {{ w.videoLink }}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for w in word.wordFrs %}
+                                                                {{ w.videoLink }}
+                                                            {% endfor %}
+                                                        {% endif %}"
+                                                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+                            </li>
+                            <li id="sentences">
+                                <div class="collapsible-header flow-text">
+                                    Phrases de contextualisation
+                                </div>
+                                <div class="collapsible-body">
+                                    <div class="row">
+                                        <article id="article-card-sentence-1" class="col s12 m6 x6 offset-x3">
+                                            <div class="card center">
+                                                <div id="card-video-1" class="card-image">
+                                                    <div class="video-container">
+                                                        <iframe id="video-sentence-1" width="1100" height="619" src="{{ word.videoLinkSentence }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                                <div id="context-sentence-block-video-1" class="context-sentence card-content">
+                                                    <p class="flow-text black-text">
+                                                        {{ word.contextSentence }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article id="article-card-sentence-2" class="col s12 m6 x6 offset-x3">
+                                            <div class="card center">
+                                                <div id="card-video-2" class="card-image">
+                                                    <div class="video-container">
+                                                        <iframe id="video-sentence-2" width="1100" height="619" src="
+                                                        {% if langue == "fr" %}
+                                                            {% for w in word.wordEns %}
+                                                                {{ w.videoLinkSentence }}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for w in word.wordFrs %}
+                                                                {{ w.videoLinkSentence }}
+                                                            {% endfor %}
+                                                        {% endif %}"
+                                                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                                <div id="context-sentence-block-video-2" class="context-sentence card-content">
+                                                    <p class="flow-text black-text">
+                                                        {% if langue == "fr" %}
+                                                            {% for w in word.wordEns %}
+                                                                {{ w.contextSentence }}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for w in word.wordFrs %}
+                                                                {{ w.contextSentence }}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="exercice-header" class="collapsible-header flow-text">
+                                    Exercices
+                                </div>
+                                <div id="exercice-body" class="collapsible-body">
+                                    <div class="preloader-background center ">
+                                        <div class="preloader-wrapper medium active">
+                                            <div class="spinner-layer spinner-yellow-only">
+                                                <div class="circle-clipper left">
+                                                    <div class="circle"></div>
+                                                </div>
+                                                <div class="gap-patch">
+                                                    <div class="circle"></div>
+                                                </div>
+                                                <div class="circle-clipper right">
+                                                    <div class="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="fixed-action-btn click-to-toggle direction-top">
+                <a class="btn-floating btn-large pulse background-color-orange-lacces">
+                    <i class="large material-icons white-text">add</i>
+                </a>
+                <ul>
+                    <li>
+
+                        {% if langue == "fr" %}
+
+                            <a class="btn-floating tooltipped background-color-violet-lacces" data-position="left" data-tooltip="Accéder aux exercices du mot {{ word.word }}" href="{{ path('lacces_exercices',{'langue': "fr", 'wordId': word.id }) }}">
+                                <i class="material-icons white-text">school</i>
+                            </a>
+
+                        {% else %}
+
+                            <a class="btn-floating tooltipped background-color-violet-lacces" data-position="left" data-tooltip="Accéder aux exercices du mot {{ word.word }}" href="{{ path('lacces_exercices',{'langue': "en", 'wordId': word.id }) }}">
+                                <i class="material-icons white-text">school</i>
+                            </a>
+
+                        {% endif %}
+
+                    </li>
+                    <li>
+                        <a class="btn-floating tooltipped background-color-violet-lacces" data-position="left" data-tooltip="Lire les vidéos" id="play-videos">
+                            <i class="material-icons white-text">play_circle_filled</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn-floating tooltipped background-color-violet-lacces" data-position="left" data-tooltip="Effectuer une recherche" id="search-box-click" data-target="search-box">
+                            <i class="material-icons white-text">search</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/js_for_views/searchBarre.js') }}"></script>
+    <script src="{{ asset('js/js_for_views/word.js') }}"></script>
+    <script src="{{ asset('js/js_for_views/searchBarreFocus.js') }}"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            $(".preloader-background").hide();
+        });
+        $("#exercice-header").click(function () {
+
+            var nbAlea = Math.floor(Math.random() * 3.99);
+            var langue = "{{ langue }}";
+            switch(nbAlea) {
+
+                case 0:
+                    if( langue == "fr")
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceA1',{'langue': "fr", 'wordId': word.id }) }}", "#exercice-body"));
+                    else
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceA1',{'langue': "en", 'wordId': word.id }) }}", "#exercice-body"));
+                        break;
+                case 1:
+                    if(langue == "fr")
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceA2',{'langue': "fr", 'wordId': word.id }) }}", "#exercice-body"));
+                    else
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceA2',{'langue': "en", 'wordId': word.id }) }}", "#exercice-body"));
+                        break;
+                case 2:
+                    if(langue == "fr")
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceB',{'langue': "fr", 'wordId': word.id }) }}", "#exercice-body"));
+                    else
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceB',{'langue': "en", 'wordId': word.id }) }}", "#exercice-body"));
+                        break;
+                case 3:
+                    if(langue == "fr")
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceC',{'langue': "fr", 'wordId': word.id }) }}", "#exercice-body"));
+                    else
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceC',{'langue': "en", 'wordId': word.id }) }}", "#exercice-body"));
+                        break;
+
+                // Tant que l'exercice 5 ne marche pas, on ne s'en occupe pas
+
+                /*case 4:
+                    if(langue == "fr")
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceD',{'langue': "fr", 'wordId': word.id }) }}", "#exercice-body"));
+                    else
+                        $("#exercice-body").load(ajaxExercice("{{ path('lacces_exerciceD',{'langue': "en", 'wordId': word.id }) }}", "#exercice-body"));
+                        break;*/
+            }
+        });
+
+        function ajaxExercice (path, blockResponse){
+            $.ajax({
+                cache:false,
+                type: "POST",
+                dataType: "JSON",
+                url: path,
+                data: {'langue': "{{ langue }}"},
+                beforeSend: function(){
+                    $(".preloader-background").show();
+                },
+                success: function(response)
+                {
+                    $(blockResponse).html(response);
+                    $(".preloader-background").hide();
+                },
+            });
+        }
+    </script>
+{% endblock %}
